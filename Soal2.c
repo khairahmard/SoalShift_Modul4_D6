@@ -7,3 +7,6 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/time.h>
+
+static const char *dirpath = "/home/khairunnisa/Documents";
+
