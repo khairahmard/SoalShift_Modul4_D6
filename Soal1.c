@@ -57,12 +57,12 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 
 	while ((de = readdir(dp)) != NULL) {
 		struct stat st;
-		char* newname;
+		char* newName;
 		newName = strcat(de->d_name, ".ditandai");
 		memset(&st, 0, sizeof(st));
 		st.st_ino = de->d_ino;
 		st.st_mode = de->d_type << 12;
-		res = (filler(buf, de->d_name, &st, 0));
+		res = (filler(buf, newName, &st, 0));
 			if(res!=0) break;
 	}
 
@@ -85,7 +85,7 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 		
 		memcpy(newFile, path, strlen(path) - 9);
 		newFile[strlen(path)-9] = '\0';
-		sprintf(fpath, "%s%s",dirpath,newFile)
+		sprintf(fpath, "%s%s",dirpath,newFile);
 	}
 
 	int res = 0;
