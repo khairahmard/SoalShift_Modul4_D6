@@ -78,7 +78,6 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 	if(strcmp(path,"/") == 0)
 	{
 		memcpy(newFile, path, strlen(path));
-		//path=dirpath;
 		sprintf(fpath,"%s",path);
 	}
 	else{
