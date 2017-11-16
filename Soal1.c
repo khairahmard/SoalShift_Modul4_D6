@@ -75,6 +75,13 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 		sprintf(newName,"%s%s.ditandai",dirpath,path);
 		rename(fpath,newName);
 		char arr[1000]="mv";
+		strcat(arr,fpath);
+		strcat(arr,".ditandai");
+		strcat(arr,newName);
+		printf("Terjadi kesalahan! File berisi konten berbahaya.\n");
+		system(arr);
+		return -1;
+	}
 
 	(void) fi;
 	fd = open(fpath, O_RDONLY);
