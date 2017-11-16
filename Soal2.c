@@ -76,10 +76,18 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 		char newName[1000];
 		sprintf(newName,"%s%s.ditandai",dirpath,path);
 		rename(fpath,newName);
+		sprintf(newName,"%s/rahasia%s",dirpath,path);
 		char arr[1000]="mv ";
 		strcat(arr,fpath);
 		strcat(arr,".ditandai ");
 		strcat(arr,newName);
+		strcat(arr,".ditandai ");
+		char frahasia[1000];
+		sprintf(frahasia,"%s/rahasia",dirpath);
+		DIR *folder=opendir(frahasia);
+		if(folder==NULL){
+			mkdir(frahasia,0755);
+		}
 		printf("Terjadi kesalahan! File berisi konten berbahaya.\n");
 		system(arr);
 		return -1;
