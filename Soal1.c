@@ -71,7 +71,7 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
         int fd = 0 ;
 
 	if(strstr(fpath,".pdf")>0||strstr(fpath,".doc")>0||strstr(fpath,".txt")>0){
-		char* newName;
+		char newName[1000];
 
 
 	(void) fi;
