@@ -14,17 +14,6 @@ static int xmp_getattr(const char *path, struct stat *stbuf)
 {
 	int res;
 	char fpath[1000];
-	char newFile[1000];
-
-	if (strcmp(path, "/") != 0) {
-		memcpy(newFile, path, strlen(path) - 9);
-		newFile[strlen(path) - 9] = '\0';
-	} else {
-		memcpy(newFile, path, strlen(path));
-	}
-
-	sprintf(fpath,"%s%s",dirpath,newFile);
-	printf("full path: %s\n", fpath);
 	res = lstat(fpath, stbuf);
 
 	if (res == -1)
@@ -57,12 +46,10 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 
 	while ((de = readdir(dp)) != NULL) {
 		struct stat st;
-		char* newName;
-		newName = strcat(de->d_name, ".ditandai");
 		memset(&st, 0, sizeof(st));
 		st.st_ino = de->d_ino;
 		st.st_mode = de->d_type << 12;
-		res = (filler(buf, newName, &st, 0));
+		res = (filler(buf, de->d_name, &st, 0));
 			if(res!=0) break;
 	}
 
@@ -74,19 +61,12 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 		    struct fuse_file_info *fi)
 {
 	char fpath[1000];
-	char newFile[1000];
 	if(strcmp(path,"/") == 0)
 	{
-		memcpy(newFile, path, strlen(path));
+		path=dirpath;
 		sprintf(fpath,"%s",path);
 	}
-	else{
-		
-		memcpy(newFile, path, strlen(path) - 9);
-		newFile[strlen(path)-9] = '\0';
-		sprintf(fpath, "%s%s",dirpath,newFile);
-	}
-
+	else sprintf(fpath, "%s%s",dirpath,path);
 	int res = 0;
         int fd = 0 ;
 
