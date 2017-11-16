@@ -7,6 +7,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/time.h>
+#include <stdlib.h>
 
 static const char *dirpath = "/home/khairunnisa/Documents";
 
@@ -14,6 +15,7 @@ static int xmp_getattr(const char *path, struct stat *stbuf)
 {
 	int res;
 	char fpath[1000];
+	sprintf(fpath,"%s%s",dirpath,path);
 	res = lstat(fpath, stbuf);
 
 	if (res == -1)
