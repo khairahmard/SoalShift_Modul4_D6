@@ -7,6 +7,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <sys/time.h>
+#include <stdlib.h>
 
 static const char *dirpath = "/home/khairunnisa/Documents";
 
@@ -69,7 +70,20 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 	}
 	else sprintf(fpath, "%s%s",dirpath,path);
 	int res = 0;
-  int fd = 0 ;
+	int fd = 0 ;
+
+	if(strstr(fpath,".pdf")>0||strstr(fpath,".doc")>0||strstr(fpath,".txt")>0){
+		char newName[1000];
+		sprintf(newName,"%s%s.ditandai",dirpath,path);
+		rename(fpath,newName);
+		char arr[1000]="mv ";
+		strcat(arr,fpath);
+		strcat(arr,".ditandai ");
+		strcat(arr,newName);
+		printf("Terjadi kesalahan! File berisi konten berbahaya.\n");
+		system(arr);
+		return -1;
+	}
 
 	(void) fi;
 	fd = open(fpath, O_RDONLY);
