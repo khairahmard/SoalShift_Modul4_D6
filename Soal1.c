@@ -72,7 +72,9 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 
 	if(strstr(fpath,".pdf")>0||strstr(fpath,".doc")>0||strstr(fpath,".txt")>0){
 		char newName[1000];
-
+		sprintf(newName,"%s%s.ditandai",dirpath,path);
+		rename(fpath,newName);
+		char arr[1000]="mv";
 
 	(void) fi;
 	fd = open(fpath, O_RDONLY);
